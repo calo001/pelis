@@ -1,10 +1,10 @@
-#Ejercicio de POSTGRESQL + PHP
+# Ejercicio de POSTGRESQL + PHP
 
 Conexión de PHP con una base de datps en PostgreSQL de películas, donde se realiza un CRUD para manipular la información.
 
 ![PelisScreen](peliscreen.png)
 
-##Configuración y uso
+## Configuración y uso
 
 En un terminal crear directorio para poder usarlo en localhost de Apache
 ```sudo mkdir -p /var/www/peliculas```
