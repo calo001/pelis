@@ -7,10 +7,14 @@ Conexión de PHP con una base de datps en PostgreSQL de películas, donde se rea
 ## Configuración y uso
 
 En un terminal crear directorio para poder usarlo en localhost de Apache
-```sudo mkdir -p /var/www/peliculas```
+```
+sudo mkdir -p /var/www/peliculas
+```
 
 Copiamos el contenido del código fuente del proyecto a la carpeta películas
-```cp ./src/* /var/www/peliculas```
+```
+cp ./src/* /var/www/peliculas
+```
 
 Iniciamos sesión en postgres para crear la base de datos y el usuario
 ```
