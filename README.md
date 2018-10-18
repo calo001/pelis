@@ -7,7 +7,7 @@ Conexión de PHP con una base de datps en PostgreSQL de películas, donde se rea
 ## Configuración y uso
 En un terminal clona el repositorio
 ```
-git clone git@github.com:calo001/pelis.git
+git clone https://github.com/calo001/pelis.git
 ```
 Entra a la carpeta del repositorio clonado
 ```
