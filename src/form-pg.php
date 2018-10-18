@@ -32,13 +32,20 @@
 		if (isset($_GET['nombrenuevo'])) {
 			$idnuevo=$_GET['idnuevo'];
 			$nombrenuevo=$_GET['nombrenuevo']; 
+			$catNuevo=$_GET['categorianueva']; 
 		
-			$modify = pg_query($connection, "UPDATE pelicula SET nombre='$nombrenuevo' WHERE id=$idnuevo");
+			$modify = pg_query($connection, "UPDATE pelicula SET nombre='$nombrenuevo', id_categoria='$catNuevo' WHERE id=$idnuevo");
 			header("Location:select-pg.php");
 		} else {
 			$id = $_GET['id'];
-			$nom = pg_query($connection, "SELECT nombre FROM pelicula WHERE id=$id");
-			$nombre = pg_fetch_array($nom);
+			$result = pg_query($connection, "SELECT * FROM pelicula WHERE id=$id");
+
+			$row = pg_fetch_array($result, 0);
+			$nombre = $row['nombre'];
+			$idCategoria = $row['id_categoria'];
+
+			$result = pg_query($connection, "SELECT * FROM categoria");
+        	$numrows = pg_num_rows($result);
 	?>
 	<div class="container ">
 		<div class="col-sm-8 hero">
@@ -49,9 +56,31 @@
 				<div class="form-group">
 				<label for="inputEmail3" class="col-sm-2 control-label">Nuevo nombre</label>
 				<div class="col-sm-5">
-					<input type="text" class="form-control" id="inputEmail3" value="<?php echo $nombre[0] ?>" name="nombrenuevo">
+					<input type="text" class="form-control" id="inputEmail3" value="<?php echo $nombre ?>" name="nombrenuevo">
 				<input type="hidden" name="idnuevo" value="<?php echo $id ?>">
 				</div>
+
+				<div class="form-group col-sm-5">
+					<label for="categoria">Selecciona categoria</label>
+					<select class="form-control" name="categorianueva" required="required">
+						<?php 
+							for ($i = 0; $i < $numrows; $i++) {
+								$value = $i + 1;
+								echo "<option value= $value"; 
+								if ($idCategoria == $value) {
+									echo " selected";
+								}
+								echo '>';
+								$row = pg_fetch_array($result, $i);
+								$id = $row['id'];
+								$name = $row['nombre'];
+								echo $name;
+								echo '</option>';
+							}
+                    	?> 
+					</select>
+				</div>
+
 				</div><br/><br/>
 				<div align="left">
 				<button type="submit" class="btn btn-success" name="enviar">Realizar cambios</button>

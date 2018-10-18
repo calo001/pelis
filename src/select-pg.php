@@ -9,6 +9,9 @@
     <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
     
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jqueryui-editable/css/jqueryui-editable.css" rel="stylesheet"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jqueryui-editable/js/jqueryui-editable.min.js"></script>
 </head>
 <style>
 	.hero {
@@ -22,13 +25,23 @@
         margin: 3px;
         color: white;
     }
+
+    form {
+        margin: 5em;
+        padding: 2em;
+        color: white;
+        background-color: #505050;
+    }
 </style>
 <body>
     <?php
         include ("conexion-pg.php");
         
-        $result = pg_query($connection, "SELECT * FROM pelicula");
+        $result = pg_query($connection, "SELECT pelicula.id, pelicula.nombre, categoria.nombre as categoria FROM pelicula LEFT JOIN categoria ON pelicula.id_categoria = categoria.id;");
         $numrows = pg_num_rows($result);
+
+        $resultcategorias = pg_query($connection, "SELECT * FROM categoria");
+        $numrowsCategorias = pg_num_rows($resultcategorias);
     ?>
 
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -54,7 +67,7 @@
 			<h1>Las mejores películas</h1>
 			<h3>Visualiza las peliculas</h3>
 		</div>
-
+        <p>Nueva peli: <span></span></p>
         <table class="table display" id="table">
         <thead>
             <tr>
@@ -72,25 +85,78 @@
                     echo "<td>"
                     ?> 
                     <span class="number" ><?php echo $id ?></span>
-                    <a href =" <?php echo 'delete-pg.php?id=' . $id ?>"> <button
-                    type=button class="btn btn-info btn-xs">Eliminar</button></a> 
+                    <a id="delete" href =" <?php echo 'delete-pg.php?id=' . $id ?>"
+                        onclick="return confirm('Are you sure?');"> 
+                        <button type=button class="btn btn-info btn-xs">Eliminar</button>
+                    </a> 
                     
                     <a href =" <?php echo 'form-pg.php?id=' . $id ?>"> 
-                    <button type=button class="btn btn-info btn-xs">Modificar</button></a>
+                        <button type=button class="btn btn-info btn-xs">Modificar</button>
+                    </a>
                     
                     <?php
-                    echo "<td>", $row["nombre"], "</td>";
-                    echo "<td>", $row["categoria"], "</td></tr>";
+                        echo "<td>", '<a href="#" id="name" data-type="text">',
+                                        $row["nombre"], "</td>", 'awesome</a>';
+                        echo "<td>", $row["categoria"], "</td></tr>";
                     }
             ?>
         </tbody>
         </table>
-<script type="text/javascript" charset="utf-8">
-    $(document).ready(function () {
-        $('#table').dataTable();
-    });
-    </script>
 
-	</div>
+        <!-- AGREGAR PELICULA USANDO AJAX -->
+        <form name="form" method="get">
+            <h2>Ingrese una nueva película con AJAX</h2>
+			<div class="form-group">
+				<label for="namepeli">Nombre de la palícula</label>
+				<input type="text" class="form-control" name="namepeli" required="required" id="namepeli" placeholder="Ingrese nombre de película">
+			</div>
+			<div class="form-group">
+				<label for="categoria">Selecciona categoria</label>
+				<select class="form-control" name="categoria" required="required">
+					<?php 
+						for ($i = 0; $i < $numrowsCategorias; $i++) {
+							$val = $i + 1;
+							echo '<option value=' . $val . '>';
+							$rowCat = pg_fetch_array($resultcategorias, $i);
+							$idCat = $rowCat['id'];
+							$nameCat = $rowCat['nombre'];
+							echo $nameCat;
+							echo '</option>';
+						}
+                    ?> 
+				</select>
+			</div>
+			<div class="form-group">
+			<button id="btnSubmit" type="submit" class="btn btn-primary">Agregar</button>
+		</form>
+
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function () {
+            $('#table').dataTable();
+        });
+
+        $( "form" ).submit(function( event ) {
+            //alert ("Agregar");
+            var name  = event.currentTarget[0].value;
+            var category = event.currentTarget[1].value; 
+     
+            var params = { namepeli:name, categoria:category };
+            var strParams = jQuery.param( params );
+            var uri = 'insert-pg.php?' + strParams;
+
+            $.get( uri, function( data ) {
+                location.reload();
+            });
+
+            event.preventDefault();
+        });
+
+        $(function(){
+        $('#name').editable({
+                url: '/post',
+                title: 'Enter username'
+            });
+        });
+    </script>
 </body>
 </html>

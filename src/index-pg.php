@@ -29,11 +29,19 @@
 	</div>
 	</nav>
 
+	<?php
+        include ("conexion-pg.php");
+        
+        $result = pg_query($connection, "SELECT * FROM categoria");
+        $numrows = pg_num_rows($result);
+    ?>
+
 	<div class="container ">
 		<div class="col-sm-8 hero">
 			<h1>Las mejores películas</h1>
 			<h3>Encuentra las mejores películas</h3>
 		</div>
+
 		<form action="insert-pg.php" name="form" method="get">
 			<div class="form-group">
 				<label for="namepeli">Nombre de la palícula</label>
@@ -41,14 +49,18 @@
 			</div>
 			<div class="form-group">
 				<label for="categoria">Selecciona categoria</label>
-				<select class="form-control" name="categoria" id="categoria" required="required">
-				<option>Humor</option>
-				<option>Terror</option>
-				<option>Super heroes</option>
-				<option>Romance</option>
-				<option>Drama</option>
-				<option>Suspenso</option>
-				<option>Animacion</option>
+				<select class="form-control" name="categoria" required="required">
+					<?php 
+						for ($i = 0; $i < $numrows; $i++) {
+							$val = $i + 1;
+							echo '<option value=' . $val . '>';
+							$row = pg_fetch_array($result, $i);
+							$id = $row['id'];
+							$name = $row['nombre'];
+							echo $name;
+							echo '</option>';
+						}
+                    ?> 
 				</select>
 			</div>
 			<div class="form-group">
