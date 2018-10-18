@@ -31,7 +31,7 @@ Crear base de datos
 ```
 CREATE DATABASE peliculas;
 ```
-Crear usuario nuevo
+Crear usuario nuevo [Solo si no está creado]
 ```
 CREATE USER carloslr WITH PASSWORD ‘123’;
 GRANT ALL PRIVILEGES ON DATABASE peliculas TO carloslr
@@ -56,6 +56,10 @@ CREATE TABLE pelicula (
 Nos aseguramos de que exista la tabla en la base de datos
 ```
 \dt
+```
+Salir de la sesión del rol carloslr
+```
+\q
 ```
 Iniciamos el servidor de Apache
 ```
