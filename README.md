@@ -7,7 +7,7 @@ Conexión de PHP con una base de datps en PostgreSQL de películas, donde se rea
 ## Configuración y uso
 En un terminal clona el repositorio
 ```
-git clone git@github.com:calo001/pelis.git
+git clone https://github.com/calo001/pelis.git
 ```
 Entra a la carpeta del repositorio clonado
 ```
@@ -31,7 +31,7 @@ Crear base de datos
 ```
 CREATE DATABASE peliculas;
 ```
-Crear usuario nuevo
+Crear usuario nuevo [Solo si no está creado]
 ```
 CREATE USER carloslr WITH PASSWORD ‘123’;
 GRANT ALL PRIVILEGES ON DATABASE peliculas TO carloslr
@@ -57,9 +57,13 @@ Nos aseguramos de que exista la tabla en la base de datos
 ```
 \dt
 ```
+Salir de la sesión del rol carloslr
+```
+\q
+```
 Iniciamos el servidor de Apache
 ```
 sudo /etc/init.d/apache2 start
 ```
 Entramos a la dirección
-[Localhost](http://localhost/peliculas/select-pg.php#)
+[Localhost](http://localhost/peliculas/index-pg.php)
