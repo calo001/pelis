@@ -62,4 +62,4 @@ Iniciamos el servidor de Apache
 sudo /etc/init.d/apache2 start
 ```
 Entramos a la dirección
-[Localhost](http://localhost/peliculas/select-pg.php#)
+[Localhost](http://localhost/peliculas/index-pg.php)
