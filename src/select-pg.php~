@@ -10,13 +10,8 @@
     
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
-    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script> 
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-
-    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
-    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jqueryui-editable/css/jqueryui-editable.css" rel="stylesheet"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jqueryui-editable/js/jqueryui-editable.min.js"></script>
 </head>
 <style>
 	.hero {
@@ -31,7 +26,7 @@
         color: white;
     }
 
-    .form {
+    form {
         margin: 5em;
         padding: 2em;
         color: white;
@@ -72,6 +67,7 @@
 			<h1>Las mejores películas</h1>
 			<h3>Visualiza las peliculas</h3>
 		</div>
+        <p>Nueva peli: <span></span></p>
         <table class="table display" id="table">
         <thead>
             <tr>
@@ -99,8 +95,8 @@
                     </a>
                     
                     <?php
-                        echo "<td>", '<a href="#" class="edit" data-type="text" data-pk="'. $id .'" data-name="nombre" data-url="update-name.php">',
-                                        $row["nombre"], "</td>", '</a>';
+                        echo "<td>", '<a href="#" id="name" data-type="text">',
+                                        $row["nombre"], "</td>", 'awesome</a>';
                         echo "<td>", $row["categoria"], "</td></tr>";
                     }
             ?>
@@ -108,7 +104,7 @@
         </table>
 
         <!-- AGREGAR PELICULA USANDO AJAX -->
-        <form name="form" method="get" class="form">
+        <form name="form" method="get">
             <h2>Ingrese una nueva película con AJAX</h2>
 			<div class="form-group">
 				<label for="namepeli">Nombre de la palícula</label>
@@ -155,12 +151,11 @@
             event.preventDefault();
         });
 
-        //turn to inline mode
-        $.fn.editable.defaults.mode = 'inline';
-
-        $('.edit').editable({
-            type: 'text',
-            title: 'Nuevo nombre de película'
+        $(function(){
+        $('#name').editable({
+                url: '/post',
+                title: 'Enter username'
+            });
         });
     </script>
 </body>

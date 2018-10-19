@@ -6,5 +6,5 @@
 
 	$result = pg_query($connection, "INSERT INTO pelicula (nombre, id_categoria) VALUES ('$var1','$var2')");
 
-    #header('Location:select-pg.php');
+    header('Location:select-pg.php');
 ?>
