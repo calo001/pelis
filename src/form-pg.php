@@ -19,8 +19,14 @@
 
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 		<ul class="navbar-nav mr-auto">
-		<li class="nav-item active">
-			<a class="nav-link" href="#">Nuevo <span class="sr-only">(current)</span></a>
+		<li class="nav-item">
+			<a class="nav-link" href="index-pg.php">Nuevo <span class="sr-only">(current)</span></a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="select-pg.php">Lista de películas <span class="sr-only">(current)</span></a>
+		</li>   
+        <li class="nav-item">
+			<a class="nav-link" href="videocentro.php">Video Centros</a>
 		</li>
 		</ul>
 	</div>

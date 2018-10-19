@@ -25,6 +25,9 @@
 		<li class="nav-item">
 			<a class="nav-link" href="select-pg.php">Lista de películas</a>
 		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="videocentro.php">Video Centros</a>
+		</li>
 		</ul>
 	</div>
 	</nav>

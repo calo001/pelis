@@ -63,6 +63,9 @@
 		<li class="nav-item">
 			<a class="nav-link active" href="#">Lista de películas <span class="sr-only">(current)</span></a>
 		</li>   
+        <li class="nav-item">
+			<a class="nav-link" href="videocentro.php">Video Centros</a>
+		</li>
 		</ul>
 	</div>
 	</nav>
