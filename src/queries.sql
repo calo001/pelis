@@ -6,6 +6,7 @@ CREATE TABLE videocentro (
 	PRIMARY KEY (id)
 );
 
+
 DROP TABLE IF EXISTS categoria;
 CREATE TABLE categoria (
 	id 		SERIAL NOT NULL,
