@@ -6,5 +6,5 @@
 
 	$result = pg_query($connection, "UPDATE pelicula SET nombre='$nombrenuevo' WHERE id=$idnuevo");
 
-    header('Location:editinline.php');
+  #header('Location:editinline.php');
 ?>
